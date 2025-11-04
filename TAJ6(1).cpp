@@ -4,7 +4,7 @@ using namespace std;
 const int SIZE = 10;
 
 struct Node {
-    string key; // untuk nama_barang
+    string key;
     int harga; // value
     Node* next;
 };
@@ -94,17 +94,24 @@ void display(Node* table[]) {
 int main() {
     Node* table[SIZE];
     initTable(table);
-
-    insert(table, "Buku", 5000);
-    insert(table, "Pensil", 1000);
-    insert(table, "Penghapus", 500);
-    insert(table, "Penggaris", 2000);
-    insert(table, "Spidol", 3000);
-    insert(table, "Kertas", 10000);
+    
+    do {
+        string nama;
+        int harga;
+        cout << "Masukkan nama barang (atau 'exit' untuk selesai): ";
+        getline(cin, nama);
+        if (nama == "exit") break;
+        cout << "Masukkan harga barang: ";
+        cin >> harga;
+        cin.ignore();
+        insert(table, nama, harga);
+    } while (true);
     
     display(table);
 
-    string barangCari = "Pensil";
+    string barangCari;
+    cout << "\nMasukkan nama barang yang ingin dicari: ";
+    getline(cin, barangCari);
     Node* hasil = search(table, barangCari);
     if (hasil != nullptr) {
         cout << "\nBarang '" << barangCari << "' ditemukan dengan harga = Rp" << hasil->harga << endl;
@@ -112,7 +119,9 @@ int main() {
         cout << "\nBarang '" << barangCari << "' tidak ditemukan\n";
     }
 
-    string barangHapus = "Pensil";
+    string barangHapus;
+    cout << "\nMasukkan nama barang yang ingin dihapus: ";
+    getline(cin, barangHapus);
     removeKey(table, barangHapus);
     cout << "\nSetelah menghapus '" << barangHapus << "':\n";
     display(table);
